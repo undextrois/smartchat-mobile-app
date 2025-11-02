@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>SmartChat</name>
+    <description>Sample Apache Cordova App</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="Orientation" value="portrait" />
+</widget>
+
+<!--
+
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Odyssey</name>
+    <description>Sample Apache Cordova App</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="Orientation" value="portrait" />
+    <platform name="android">
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/android/splashscreen.xml" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#7B68EE" /> 
+       
+        <preference name="AutoHideSplashScreen" value="true" />
+        <preference name="FadeSplashScreen" value="true"/>
+        <preference name="FadeSplashScreenDuration" value="750"/>
+        <preference name="SplashScreenDelay" value="3000" />
+    
+        <preference name="AndroidGradlePluginVersion" value="8.3.1" />
+
+        <icon src="res/screen/android/mipmap-ldpi/ic_launcher.png" density="ldpi" />
+        <icon src="res/screen/android/mipmap-mdpi/ic_launcher.png" density="mdpi" />
+        <icon src="res/screen/android/mipmap-hdpi/ic_launcher.png" density="hdpi" />
+        <icon src="res/screen/android/mipmap-xhdpi/ic_launcher.png" density="xhdpi" />
+        <icon src="res/screen/android/mipmap-xxhdpi/ic_launcher.png" density="xxhdpi" />
+        <icon src="res/screen/android/mipmap-xxxhdpi/ic_launcher.png" density="xxxhdpi" />
+</platform>
+</widget>
+-->
