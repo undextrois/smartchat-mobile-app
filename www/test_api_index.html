@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cordova Network Diagnostic</title>
+    
+    <!-- Permissive CSP for testing -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: gap:; connect-src * 'unsafe-inline';">
+    
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        .loading { background: #fff3cd; }
+        .info { background: #d1ecf1; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Cordova Network Diagnostic</h1>
+    <div id="results"></div>
+
+    <script>
+        function log(msg, type = 'info') {
+            console.log(msg);
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test ${type}`;
+            div.innerHTML = msg;
+            results.appendChild(div);
+        }
+
+        function testEndpoint(url, method = 'GET', data = null) {
+            return new Promise((resolve) => {
+                log(`Testing ${method} ${url}...`, 'loading');
+                
+                const xhr = new XMLHttpRequest();
+                xhr.open(method, url, true);
+                if (data) {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                }
+                
+                xhr.timeout = 10000;
+                
+                xhr.onload = function() {
+                    log(`✅ ${method} ${url} - Status: ${xhr.status}`, 'success');
+                    resolve({ success: true, status: xhr.status, response: xhr.responseText });
+                };
+                
+                xhr.onerror = function(e) {
+                    log(`❌ ${method} ${url} - Network Error: ${e.type}`, 'error');
+                    resolve({ success: false, error: 'Network Error' });
+                };
+                
+                xhr.ontimeout = function() {
+                    log(`⏰ ${method} ${url} - Timeout`, 'error');
+                    resolve({ success: false, error: 'Timeout' });
+                };
+                
+                try {
+                    xhr.send(data ? JSON.stringify(data) : null);
+                } catch (err) {
+                    log(`💥 ${method} ${url} - Exception: ${err.message}`, 'error');
+                    resolve({ success: false, error: err.message });
+                }
+            });
+        }
+
+        async function runAllTests() {
+            log('🚀 Starting Comprehensive Network Diagnostics...', 'info');
+            log(`User Agent: ${navigator.userAgent}`, 'info');
+            log(`Platform: ${navigator.platform}`, 'info');
+            log(`Cordova: ${typeof cordova}`, 'info');
+            
+            const baseURLs = [
+                'http://10.0.2.2:5000',
+                'http://localhost:5000',
+                'http://127.0.0.1:5000'
+            ];
+            
+            const endpoints = [
+                { path: '/', method: 'GET' },
+                { path: '/api/health', method: 'GET' },
+                { path: '/api/chat', method: 'POST', data: {message: 'test'} },
+                { path: '/api/login', method: 'POST', data: {username: 'demo_user', password: 'password123'} }
+            ];
+            
+            // Test each base URL with each endpoint
+            for (const baseUrl of baseURLs) {
+                log(`<h3>Testing Base URL: ${baseUrl}</h3>`, 'info');
+                
+                for (const endpoint of endpoints) {
+                    const url = baseUrl + endpoint.path;
+                    await testEndpoint(url, endpoint.method, endpoint.data);
+                    await new Promise(resolve => setTimeout(resolve, 500)); // Delay between requests
+                }
+            }
+            
+            log('🎯 Diagnostics Complete!', 'info');
+        }
+
+        // Start diagnostics when device is ready
+        document.addEventListener('deviceready', function() {
+            log('📱 Device Ready - Starting Tests...', 'success');
+            setTimeout(runAllTests, 1000);
+        }, false);
+
+        // Fallback if deviceready doesn't fire
+        setTimeout(function() {
+            if (!document.getElementById('results').innerHTML.includes('Device Ready')) {
+                log('⚠️ Device ready never fired - testing anyway...', 'error');
+                runAllTests();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

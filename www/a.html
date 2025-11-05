@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <!-- Content Security Policy for Cordova 
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: https://*; connect-src 'self' http://10.0.2.2:5000 ws://10.0.2.2:5000 http://localhost:5000 ws://localhost:5000 https://*;">-->
+            <meta http-equiv="Content-Security-Policy" 
+          content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; 
+                   connect-src * 'unsafe-inline'; 
+                   script-src * 'unsafe-inline' 'unsafe-eval'; 
+                   style-src * 'unsafe-inline'; 
+                   img-src * data: blob:; 
+                   media-src *;">
+        
+        <!-- Mobile Meta Tags -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover, user-scalable=no">
+        <meta name="color-scheme" content="light">
+        
+        <!-- Prevent favicon 404 -->
+        <link rel="icon" href="data:,">
+        
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/styles.css">
+        
+        <title>SmartChat Financial Assistant</title>
+    </head>
+    <body>
+        <!-- Main App Container -->
+        <div id="app">
+            <!-- Initial Loading Screen -->
+            <div class="initial-loader">
+                <div class="loader-content">
+                    <div class="loader-icon">💰</div>
+                    <div class="loader-text">Loading SmartChat...</div>
+                    <div class="loader-spinner"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scripts - Load in correct order -->
+        <script src="cordova.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/frontend.js"></script>
+        <script src="js/index.js"></script>
+        
+        <!-- Inline styles for initial loader -->
+        <style>
+            .initial-loader {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            
+            .loader-content {
+                text-align: center;
+                color: white;
+            }
+            
+            .loader-icon {
+                font-size: 64px;
+                margin-bottom: 20px;
+                animation: pulse 2s ease-in-out infinite;
+            }
+            
+            .loader-text {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            }
+            
+            .loader-spinner {
+                width: 40px;
+                height: 40px;
+                margin: 0 auto;
+                border: 4px solid rgba(255, 255, 255, 0.3);
+                border-top: 4px solid white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.8; }
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </body>
+</html>

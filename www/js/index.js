@@ -25,5 +25,39 @@ function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
+    console.log('Cordova device ready!');
+    
+    // Notify frontend.js that Cordova is ready
+    if (window.app && window.app.log) {
+        window.app.log('success', 'Cordova initialized', {
+            platform: cordova.platformId,
+            version: cordova.version
+        });
+    }
+
+    // Handle Android back button
+    document.addEventListener('backbutton', onBackKeyDown, false);
+}
+
+function onBackKeyDown(e) {
+    e.preventDefault();
+    
+    const currentHash = window.location.hash;
+    
+    // On main screens (login or dashboard), ask to exit
+    if (currentHash === '#/' || currentHash === '' || currentHash === '#/dashboard') {
+        navigator.notification.confirm(
+            'Do you want to exit the app?',
+            function(buttonIndex) {
+                if (buttonIndex === 1) {
+                    navigator.app.exitApp();
+                }
+            },
+            'Exit App',
+            ['Exit', 'Cancel']
+        );
+    } else {
+        // Navigate back on other screens
+        window.history.back();
+    }
 }
