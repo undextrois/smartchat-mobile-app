@@ -1,8 +1,8 @@
 # SmartChat Mobile App 📱💰
 
-A Cordova-based mobile application for financial assistance with AI-powered chat capabilities.
+A cross platform mobile application frontend for financial assistance with AI-powered chat capabilities.
 
-## 🚀 Features
+## Features
 
 - **Financial Chat Assistant** - AI-powered financial advice and Q&A
 - **Account Management** - View balances and transaction history  
@@ -10,62 +10,119 @@ A Cordova-based mobile application for financial assistance with AI-powered chat
 - **Secure Authentication** - Token-based user authentication
 - **Real-time Chat** - Integrated with Rasa AI chatbot
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
-- **Cordova** - Mobile app framework
-- **Vanilla JavaScript** - Frontend logic
-- **HTML5/CSS3** - UI components with Apple-style design
-- **FrontController Pattern** - Custom MVC architecture
+- **Cordova** 
+- **Vanilla JavaScript**
+- **HTML5/CSS3**
+- **FrontController Pattern**
 
 ### Backend
-- **Python Flask** - REST API server
-- **Rasa** - AI chatbot framework
-- **SQLite/PostgreSQL** - Database management
-- **JWT** - Authentication tokens
+- **Python Flask** 
+- **Rasa** 
+- **SQLite/PostgreSQL**
+- **JWT**
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js (v14 or higher)
 - Python 3.8+
 - Android Studio (for Android builds)
 - Java JDK 8+
 
-## ⚙️ Installation
+## Installation
+### 1. Run System checks (do not proceed until all checks are satisfied)
+```bash
+python smartchat_audit.py
+```
 
-### 1. Clone the Repository
+### 2. Clone the Repository
 ```bash
 git clone https://github.com/undextrois/smartchat-mobile-app.git
 cd smartchat-mobile-app
 ```
 
-### 2. Install Cordova Dependencies
+### 3. Install Cordova Dependencies
 ```bash
 npm install -g cordova
 npm install
 ```
 
-### 3. Add Android Platform
+### 3. Add Android Platform Android
 ```bash
 cordova platform add android
 ```
 
-### 4. Install Python Dependencies
+### 3. Add Android Platform Browser
 ```bash
-cd ../smartchat-backend  # Navigate to your backend
-pip install -r requirements.txt
+cordova platform add browser
 ```
 
-## 🏃‍♂️ Running the Application
+### 4. Add Cordova Plugins
+```bash
+cordova plugin add cordova-plugin-network-information
+cordova plugin add cordova-plugin-screen-orientation
+cordova plugin add cordova-plugin-cache-clear
+cordova plugin add cordova-plugin-android-permissions
+cordova plugin add cordova-sqlite-storage
+```
+### 5. Network Configuration
+The app automatically detects environment and uses appropriate API URLs:
 
-### Start Backend Server https://github.com/Robotronut/SmartChat
+- **Android Emulator**: `http://10.0.2.2:5000/api`
+- **Physical Device**: `http://[YOUR_IP]:5000/api` 
+- **Web Browser**: `http://localhost:5000/api`
 
+### 6. Android Network Security - AndroidManifest
+For Cordova Android builds, ensure `smartchat-mobile-app/platforms/android/app/src/main/AndroidManifest.xml` contains:
+```xml
+<application
+    android:usesCleartextTraffic="true"
+    android:networkSecurityConfig="@xml/network_security_config">
+```
+### 7. Android Network Security - Security file
+Copy the file `network_security_config.xml` from the root directory into the `\smartchat-mobile-app\platforms\android\app\src\main\res\xml\` folder
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+     <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">10.0.2.2</domain>
+    <domain includeSubdomains="true">localhost</domain>
+    <domain includeSubdomains="true">127.0.0.1</domain>
+  </domain-config>
+</network-security-config>
+```
 
-### Build and Run Mobile App
+### 8. Run an Emulator window 
+```bash
+emulator -avd Pixel_4
+```
+
+### 9. Build and Run Mobile App
 ```bash
 cd smartchat-mobile-app
-cordova run android
 ```
+### 10. Run the following commands in sequence
+```bash
+cordova prepare
+```
+### 11. Build
+```bash
+cordova build
+```
+### 12. Run into the emulator
+```bash
+cordona run android
+```
+
+### 13. Check error logs open a chrome tab and type  `chrome://inspect/#devices` 
 
 ### For Web Development
 ```bash
@@ -74,24 +131,7 @@ python -m http.server 8000
 # Then open http://localhost:8000
 ```
 
-## 🔧 Configuration
-
-### Network Configuration
-The app automatically detects environment and uses appropriate API URLs:
-
-- **Android Emulator**: `http://10.0.2.2:5000/api`
-- **Physical Device**: `http://[YOUR_IP]:5000/api` 
-- **Web Browser**: `http://localhost:5000/api`
-
-### Android Network Security
-For Cordova Android builds, ensure `platforms/android/app/src/main/AndroidManifest.xml` contains:
-```xml
-<application
-    android:usesCleartextTraffic="true"
-    android:networkSecurityConfig="@xml/network_security_config">
-```
-
-## 🗂 Project Structure
+## Project Structure
 ```
 smartchat-mobile-app/
 ├── www/
@@ -107,7 +147,7 @@ smartchat-mobile-app/
 └── package.json          # Node.js dependencies
 ```
 
-## 🎯 Key Components
+## Key Components
 
 ### FrontController Class
 - Manages routing and navigation
@@ -127,7 +167,7 @@ smartchat-mobile-app/
 - Chat history persistence
 - Fallback responses when AI is unavailable
 
-## 🔐 Security Features
+##  Security Features
 
 - JWT token-based authentication
 - Automatic token refresh
@@ -135,7 +175,7 @@ smartchat-mobile-app/
 - Secure API communication
 - CORS configuration for cross-origin requests
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -167,7 +207,7 @@ cordova platform add ios
 cordova build ios
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/new-feature`
