@@ -119,7 +119,7 @@ cordova build
 ```
 ### 12. Run into the emulator
 ```bash
-cordona run android
+cordova run android
 ```
 
 ### 13. Check error logs open a chrome tab and type  `chrome://inspect/#devices` 
